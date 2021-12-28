@@ -1,56 +1,46 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
-  View, 
-  Text, 
-  StyleSheet, 
-  TextInput, 
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
   Platform,
-  TouchableOpacity
+  // ScrollView,
+  FlatList,
 } from 'react-native';
+import {Button} from '../Components/Button';
+import {SkillCard} from '../Components/SkillCard';
 
 export function Home() {
-  const [newSkill, setNewSkill] =  useState('')
-  const [mySkills, setMySkills] = useState([])
+  const [newSkill, setNewSkill] = useState('');
+  const [mySkills, setMySkills] = useState([]);
 
   function handleAddNewSkill() {
-    setMySkills(prevState => [...prevState, newSkill])
+    setMySkills(prevState => [...prevState, newSkill]);
   }
-
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome, João Pedro</Text>
-      <View> 
-        <TextInput 
-          style={styles.input} 
-          placeholder="New Skill" 
-          placeholderTextColor='#555'
+      <View>
+        <TextInput
+          style={styles.input}
+          placeholder="New Skill"
+          placeholderTextColor="#555"
           onChangeText={setNewSkill}
         />
       </View>
-        <TouchableOpacity 
-          style={styles.button}
-          activeOpacity={0.7}
-          onPress={handleAddNewSkill}
-         >
-          <Text style={styles.buttonText}>Adiconar</Text>
-        </TouchableOpacity>
-
-        <Text style={[styles.title,{marginVertical: 50}]}>
-          My Skills
-        </Text>
-
-      {mySkills.map(newSkill =>( 
-        <TouchableOpacity key={newSkill} style={styles.buttonSkill}> 
-          <Text style={styles.textSkill}>
-            {newSkill}
-          </Text>
-        </TouchableOpacity>)
-      )}
+      <Button onPress={handleAddNewSkill} />
+      <Text style={[styles.title, {marginVertical: 50}]}>My Skills</Text>
+      <FlatList
+        data={mySkills}
+        keyExtractor={item => item}
+        renderItem={({item}) => <SkillCard skill={item} />}
+      />
     </View>
   );
 }
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -71,29 +61,16 @@ const styles = StyleSheet.create({
     marginTop: 30,
     borderRadius: 7,
   },
-  button: {
-    color: '#fff',
-    backgroundColor: '#A370F7',
-    padding: 15,
-    borderRadius: 7,
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  buttonText: {
-    color: '#FFF',
-    fontSize: 17,
-    fontWeight: 'bold'
-  },
   buttonSkill: {
     backgroundColor: '#1F1E25',
     padding: 20,
     marginVertical: 10,
     borderRadius: 20,
-    alignItems:'center',  
+    alignItems: 'center',
   },
   textSkill: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
-  }
+  },
 });
