@@ -25,6 +25,7 @@ export function Home() {
       id: String(new Date().getTime()),
       name: newSkill,
     }
+
     setMySkills(prevState => [...prevState, data]);
   }
 
@@ -63,6 +64,7 @@ export function Home() {
         data={mySkills}
         keyExtractor={item => item.id}
         renderItem={({item}) => <SkillCard onPress={() => handleRemoveSkill(item.id)} skill={item.name} />}
+        style={styles.skillList}
       />
     </View>
   );
@@ -105,4 +107,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 15,
   },
+  skillList: {
+    flex: 1,
+    paddingVertical: 50,
+    marginVertical:-50,
+  }
 });
